@@ -6,7 +6,7 @@ const pms = require("pretty-ms");
 
 const command = new SlashCommand()
 	.setName("queue")
-	.setDescription("Shows the current queue")
+	.setDescription("Muestra la lista de canciones actual")
 	
 	.setRun(async (client, interaction, options) => {
 		let channel = await client.getChannel(client, interaction);
@@ -22,7 +22,7 @@ const command = new SlashCommand()
 				embeds: [
 					new MessageEmbed()
 						.setColor("RED")
-						.setDescription("Lavalink node is not connected"),
+						.setDescription(":x: | **El nodo Lavalink no está conectado.**"),
 				],
 			});
 		}
@@ -32,7 +32,7 @@ const command = new SlashCommand()
 				embeds: [
 					new MessageEmbed()
 						.setColor("RED")
-						.setDescription("There are no songs in the queue."),
+						.setDescription(":man_shrugging: | **No hay nada reproduciéndose ahora mismo.**"),
 				],
 				ephemeral: true,
 			});
@@ -41,7 +41,7 @@ const command = new SlashCommand()
 		if (!player.playing) {
 			const queueEmbed = new MessageEmbed()
 				.setColor(client.config.embedColor)
-				.setDescription("There's nothing playing.");
+				.setDescription(":x: | **No hay nada reproduciéndose.**");
 			return interaction.reply({ embeds: [queueEmbed], ephemeral: true });
 		}
 		
@@ -56,12 +56,12 @@ const command = new SlashCommand()
             var title = title.replace(/\[/g,"")
 			const queueEmbed = new MessageEmbed()
 				.setColor(client.config.embedColor)
-				.setDescription(`**♪ | Now playing:** [${ title }](${ song.uri })`)
+				.setDescription(`**:musical_note: | Reproduciendose ahora:** [${ title }](${ song.uri })`)
 				.addFields(
 					{
-						name: "Duration",
+						name: "Duración:",
 						value: song.isStream
-							? `\`LIVE\``
+							? `\`EN VIVO\``
 							: `\`${ pms(player.position, { colonNotation: true }) } / ${ pms(
 								player.queue.current.duration,
 								{ colonNotation: true },
@@ -69,12 +69,12 @@ const command = new SlashCommand()
 						inline: true,
 					},
 					{
-						name: "Volume",
+						name: "Volumen:",
 						value: `\`${ player.volume }\``,
 						inline: true,
 					},
 					{
-						name: "Total Tracks",
+						name: "Total de canciones:",
 						value: `\`${ player.queue.totalSize - 1 }\``,
 						colonNotation: true,
 						inline: true,
@@ -101,7 +101,7 @@ const command = new SlashCommand()
 			
 			const chunk = load.chunk(mapping, 10);
 			const pages = chunk.map((s) => s.join("\n"));
-			let page = interaction.options.getNumber("page");
+			let page = interaction.options.getNumber("página");
 			if (!page) {
 				page = 0;
 			}
@@ -123,11 +123,11 @@ const command = new SlashCommand()
 				const embedTwo = new MessageEmbed()
 					.setColor(client.config.embedColor)
 					.setDescription(
-						`**♪ | Now playing:** [${ title }](${ song.uri }) [${ player.queue.current.requester }]\n\n**Queued Tracks**\n${ pages[page] }`,
+						`**:musical_note: | Reproduciendose ahora:** [${ title }](${ song.uri }) [${ player.queue.current.requester }]\n\n**Canciones de la cola**\n${ pages[page] }`,
 					)
 					.addFields(
 						{
-							name: "Track Duration",
+							name: "Duración de la canción:",
 							value: song.isStream
 								? `\`LIVE\``
 								: `\`${ pms(player.position, { colonNotation: true }) } / ${ pms(
@@ -137,21 +137,21 @@ const command = new SlashCommand()
 							inline: true,
 						},
 						{
-							name: "Total Tracks Duration",
+							name: "Duración total:",
 							value: `\`${ pms(queueDuration, {
 								colonNotation: true,
 							}) }\``,
 							inline: true,
 						},
 						{
-							name: "Total Tracks",
+							name: "Total de canciones:",
 							value: `\`${ player.queue.totalSize - 1 }\``,
 							colonNotation: true,
 							inline: true,
 						},
 					)
 					.setFooter({
-						text: `Page ${ page + 1 }/${ pages.length }`,
+						text: `Página ${ page + 1 } de ${ pages.length }`,
 					});
 				
 				await interaction
@@ -168,13 +168,13 @@ const command = new SlashCommand()
 				const embedThree = new MessageEmbed()
 					.setColor(client.config.embedColor)
 					.setDescription(
-						`**♪ | Now playing:** [${ title }](${ song.uri }) [${ player.queue.current.requester }]\n\n**Queued Tracks**\n${ pages[page] }`,
+						`**:musical_note: | Reproduciendose ahora:** [${ title }](${ song.uri }) [${ player.queue.current.requester }]\n\n**Canciones de la cola**\n${ pages[page] }`,
 					)
 					.addFields(
 						{
-							name: "Track Duration",
+							name: "Duración de la canción:",
 							value: song.isStream
-								? `\`LIVE\``
+								? `\`EN VIVO\``
 								: `\`${ pms(player.position, { colonNotation: true }) } / ${ pms(
 									player.queue.current.duration,
 									{ colonNotation: true },
@@ -182,21 +182,21 @@ const command = new SlashCommand()
 							inline: true,
 						},
 						{
-							name: "Total Tracks Duration",
+							name: "Duración total:",
 							value: `\`${ pms(queueDuration, {
 								colonNotation: true,
 							}) }\``,
 							inline: true,
 						},
 						{
-							name: "Total Tracks",
+							name: "Total de canciones:",
 							value: `\`${ player.queue.totalSize - 1 }\``,
 							colonNotation: true,
 							inline: true,
 						},
 					)
 					.setFooter({
-						text: `Page ${ page + 1 }/${ pages.length }`,
+						text: `Página ${ page + 1 } de ${ pages.length }`,
 					});
 				
 				const buttonOne = new MessageButton()
@@ -225,7 +225,7 @@ const command = new SlashCommand()
 						} else {
 							return b
 								.reply({
-									content: `Only **${ interaction.user.tag }** can use this button.`,
+									content: `Sólo **${ interaction.user.tag }** puede usar este botón.`,
 									ephemeral: true,
 								})
 								.catch(() => {
@@ -248,13 +248,13 @@ const command = new SlashCommand()
 						const embedFour = new MessageEmbed()
 							.setColor(client.config.embedColor)
 							.setDescription(
-								`**♪ | Now playing:** [${ title }](${ song.uri }) [${ player.queue.current.requester }]\n\n**Queued Tracks**\n${ pages[page] }`,
+								`**:musical_note: | Reproduciendose ahora:** [${ title }](${ song.uri }) [${ player.queue.current.requester }]\n\n**Canciones de la cola**\n${ pages[page] }`,
 							)
 							.addFields(
 								{
-									name: "Track Duration",
+									name: "Duración de la canción:",
 									value: song.isStream
-										? `\`LIVE\``
+										? `\`EN VIVO\``
 										: `\`${ pms(player.position, { colonNotation: true }) } / ${ pms(
 											player.queue.current.duration,
 											{ colonNotation: true },
@@ -262,21 +262,21 @@ const command = new SlashCommand()
 									inline: true,
 								},
 								{
-									name: "Total Tracks Duration",
+									name: "Duración total:",
 									value: `\`${ pms(queueDuration, {
 										colonNotation: true,
 									}) }\``,
 									inline: true,
 								},
 								{
-									name: "Total Tracks",
+									name: "Total de canciones:",
 									value: `\`${ player.queue.totalSize - 1 }\``,
 									colonNotation: true,
 									inline: true,
 								},
 							)
 							.setFooter({
-								text: `Page ${ page + 1 }/${ pages.length }`,
+								text: `Página ${ page + 1 } de ${ pages.length }`,
 							});
 						
 						await interaction.editReply({
@@ -296,13 +296,13 @@ const command = new SlashCommand()
 						const embedFive = new MessageEmbed()
 							.setColor(client.config.embedColor)
 							.setDescription(
-								`**♪ | Now playing:** [${ title }](${ song.uri }) [${ player.queue.current.requester }]\n\n**Queued Tracks**\n${ pages[page] }`,
+								`**:musical_note: | Reproduciendose ahora:** [${ title }](${ song.uri }) [${ player.queue.current.requester }]\n\n**Canciones de la cola**\n${ pages[page] }`,
 							)
 							.addFields(
 								{
-									name: "Track Duration",
+									name: "Duración de la canción:",
 									value: song.isStream
-										? `\`LIVE\``
+										? `\`EN VIVO\``
 										: `\`${ pms(player.position, { colonNotation: true }) } / ${ pms(
 											player.queue.current.duration,
 											{ colonNotation: true },
@@ -310,21 +310,21 @@ const command = new SlashCommand()
 									inline: true,
 								},
 								{
-									name: "Total Tracks Duration",
+									name: "Duración total:",
 									value: `\`${ pms(queueDuration, {
 										colonNotation: true,
 									}) }\``,
 									inline: true,
 								},
 								{
-									name: "Total Tracks",
+									name: "Total  de canciones:",
 									value: `\`${ player.queue.totalSize - 1 }\``,
 									colonNotation: true,
 									inline: true,
 								},
 							)
 							.setFooter({
-								text: `Page ${ page + 1 }/${ pages.length }`,
+								text: `Página ${ page + 1 } de ${ pages.length }`,
 							});
 						
 						await interaction

@@ -3,7 +3,7 @@ const { MessageEmbed } = require("discord.js");
 
 const command = new SlashCommand()
 	.setName("replay")
-	.setDescription("Replay current playing track")
+	.setDescription("Vuelve a reproducir la canción actual")
 	.setRun(async (client, interaction, options) => {
 		let channel = await client.getChannel(client, interaction);
 		if (!channel) {
@@ -18,7 +18,7 @@ const command = new SlashCommand()
 				embeds: [
 					new MessageEmbed()
 						.setColor("RED")
-						.setDescription("Lavalink node is not connected"),
+						.setDescription(":x: | **El nodo Lavalink no está conectado.**"),
 				],
 			});
 		}
@@ -28,7 +28,7 @@ const command = new SlashCommand()
 				embeds: [
 					new MessageEmbed()
 						.setColor("RED")
-						.setDescription("I'm not playing anything."),
+						.setDescription(":man_shrugging: | **No estoy reproduciendo nada...**"),
 				],
 				ephemeral: true,
 			});

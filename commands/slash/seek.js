@@ -4,11 +4,11 @@ const ms = require("ms");
 
 const command = new SlashCommand()
 	.setName("seek")
-	.setDescription("Seek to a specific time in the current song.")
+	.setDescription("Salta a una posición específica de la canción actual.")
 	.addStringOption((option) =>
 		option
 			.setName("time")
-			.setDescription("Seek to time you want. Ex 1h 30m | 2h | 80m | 53s")
+			.setDescription("Elige el tiempo: Ej 1h 30m | 2h | 80m | 53s")
 			.setRequired(true),
 	)
 	.setRun(async (client, interaction, options) => {
@@ -25,7 +25,7 @@ const command = new SlashCommand()
 				embeds: [
 					new MessageEmbed()
 						.setColor("RED")
-						.setDescription("Lavalink node is not connected"),
+						.setDescription(":x: | **El nodo Lavalink no está conectado.**"),
 				],
 			});
 		}
@@ -35,7 +35,7 @@ const command = new SlashCommand()
 				embeds: [
 					new MessageEmbed()
 						.setColor("RED")
-						.setDescription("There is no music playing."),
+						.setDescription(":man_shrugging: | **No hay nada reproduciéndose ahora mismo.**"),
 				],
 				ephemeral: true,
 			});
@@ -60,9 +60,9 @@ const command = new SlashCommand()
 					new MessageEmbed()
 						.setColor(client.config.embedColor)
 						.setDescription(
-							`⏩ | **${ player.queue.current.title }** has been ${
-								time < position? "rewound" : "seeked"
-							} to **${ ms(time) }**`,
+							`:fast_forward: | **${ player.queue.current.title }** se ha ${
+								time < position? "rebobinado" : "adelantado"
+							} a **${ ms(time) }**`,
 						),
 				],
 			});
@@ -72,7 +72,7 @@ const command = new SlashCommand()
 					new MessageEmbed()
 						.setColor(client.config.embedColor)
 						.setDescription(
-							`Unable to seek current playing track. This may be due to exceeding track duration or an incorrect time format. Please check and try again`,
+							`:x: | Imposible adelantar/atrasar la canción. Eso puede ser debido a que el tiempo establecido excede al de la canción. Intenta nuevamente.`,
 						),
 				],
 			});

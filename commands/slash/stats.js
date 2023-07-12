@@ -6,7 +6,7 @@ const os = require("os");
 
 const command = new SlashCommand()
 	.setName("stats")
-	.setDescription("Get information about the bot")
+	.setDescription("Obtiene información relacionada al bot")
 	.setRun(async (client, interaction) => {
 		// get OS info
 		const osver = os.platform() + " " + os.release();
@@ -17,7 +17,7 @@ const command = new SlashCommand()
 		// get the uptime in a human readable format
 		const runtime = moment
 			.duration(client.uptime)
-			.format("d[ Days]・h[ Hrs]・m[ Mins]・s[ Secs]");
+			.format("d[ Dias]・h[ Hrs]・m[ Mins]・s[ Segs]");
 		// show lavalink uptime in a nice format
 		const lavauptime = moment
 			.duration(client.manager.nodes.values().next().value.stats.uptime)
@@ -37,7 +37,7 @@ const command = new SlashCommand()
 		// show system uptime
 		var sysuptime = moment
 			.duration(os.uptime() * 1000)
-			.format("d[ Days]・h[ Hrs]・m[ Mins]・s[ Secs]");
+			.format("d[ Dias]・h[ Hrs]・m[ Mins]・s[ Segs]");
 		
 		// get commit hash and date
 		let gitHash = "unknown";
@@ -52,24 +52,24 @@ const command = new SlashCommand()
 		}
 		
 		const statsEmbed = new MessageEmbed()
-			.setTitle(`${ client.user.username } Information`)
+			.setTitle(`Información de ${ client.user.username }`)
 			.setColor(client.config.embedColor)
 			.setDescription(
-				`\`\`\`yml\nName: ${ client.user.username }#${ client.user.discriminator } [${ client.user.id }]\nAPI: ${ client.ws.ping }ms\nRuntime: ${ runtime }\`\`\``,
+				`\`\`\`yml\nNombre: ${ client.user.username }#${ client.user.discriminator } [${ client.user.id }]\nAPI: ${ client.ws.ping }ms\nEjecutándose: ${ runtime }\`\`\``,
 			)
 			.setFields([
 				{
-					name: `Lavalink stats`,
-					value: `\`\`\`yml\nUptime: ${ lavauptime }\nRAM: ${ lavaram } MB\nPlaying: ${
+					name: `Información de Lavalink`,
+					value: `\`\`\`yml\nActivo: ${ lavauptime }\nRAM: ${ lavaram } MB\nReproduciendo: ${
 						client.manager.nodes.values().next().value.stats.playingPlayers
-					} out of ${
+					} de ${
 						client.manager.nodes.values().next().value.stats.players
 					}\`\`\``,
 					inline: true,
 				},
 				{
-					name: "Bot stats",
-					value: `\`\`\`yml\nGuilds: ${
+					name: "Estado del bot",
+					value: `\`\`\`yml\nServidores: ${
 						client.guilds.cache.size
 					} \nNodeJS: ${ nodeVersion }\nDiscordMusicBot: v${
 						require("../../package.json").version
@@ -77,8 +77,8 @@ const command = new SlashCommand()
 					inline: true,
 				},
 				{
-					name: "System stats",
-					value: `\`\`\`yml\nOS: ${ osver }\nUptime: ${ sysuptime }\n\`\`\``,
+					name: "Info del host",
+					value: `\`\`\`yml\nOS: ${ osver }\nActivo: ${ sysuptime }\n\`\`\``,
 					inline: false,
 				},
 			])

@@ -1,8 +1,8 @@
-import {AudiotrackRounded, SettingsRounded, YouTube} from '@mui/icons-material'
-import {Button, Card, Container, Link, Text} from '@nextui-org/react'
-import Head from 'next/head'
-import {useEffect, useState} from 'react'
-import {getData, IData} from '../utils/data'
+import {AudiotrackRounded, SettingsRounded, YouTube} from '@mui/icons-material';
+import {Button, Card, Container, Link, Text} from '@nextui-org/react';
+import Head from 'next/head';
+import {useEffect, useState} from 'react';
+import {getData, IData} from '../utils/data';
 
 const Home = (_props: any) => {
     const [data, setData] = useState<IData | null>(null)
@@ -17,7 +17,7 @@ const Home = (_props: any) => {
     return (
         <Container>
             <Head>
-                <title>Discord Music Bot</title>
+                <title>Niko's Discord Music Bot</title>
             </Head>
             <Container css={ {
                 display: 'flex',
@@ -134,6 +134,5 @@ const Home = (_props: any) => {
         </Container>
     )
 }
-
 
 export default Home 

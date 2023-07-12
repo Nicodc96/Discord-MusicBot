@@ -3,18 +3,18 @@ const SlashCommand = require("../../lib/SlashCommand");
 
 const command = new SlashCommand()
   .setName("invite")
-  .setDescription("Invite me to your server")
+  .setDescription("Solicita el link URL para invitarme a tu servidor.")
   .setRun(async (client, interaction, options) => {
     return interaction.reply({
       embeds: [
         new MessageEmbed()
           .setColor(client.config.embedColor)
-          .setTitle(`Invite me to your server!`),
+          .setTitle(`:cowboy: | **Invitame a tu servidor!**`),
       ],
       components: [
         new MessageActionRow().addComponents(
           new MessageButton()
-            .setLabel("Invite me")
+            .setLabel("Click aquí")
             .setStyle("LINK")
             .setURL(
               `https://discord.com/oauth2/authorize?client_id=${

@@ -5,7 +5,7 @@ const prettyMilliseconds = require("pretty-ms");
 
 const command = new SlashCommand()
 	.setName("nowplaying")
-	.setDescription("Shows the song currently playing in the voice channel.")
+	.setDescription("Muestra la información de la canción que se está reproduciendo actualmente.")
 	.setRun(async (client, interaction, options) => {
 		let channel = await client.getChannel(client, interaction);
 		if (!channel) {
@@ -20,7 +20,7 @@ const command = new SlashCommand()
 				embeds: [
 					new MessageEmbed()
 						.setColor("RED")
-						.setDescription("Lavalink node is not connected"),
+						.setDescription(":x: | **El nodo Lavalink no está conectado.**"),
 				],
 			});
 		}
@@ -30,7 +30,7 @@ const command = new SlashCommand()
 				embeds: [
 					new MessageEmbed()
 						.setColor("RED")
-						.setDescription("The bot isn't in a channel."),
+						.setDescription(":x: | **El bot no se encuentra en el canal de voz.**"),
 				],
 				ephemeral: true,
 			});
@@ -41,7 +41,7 @@ const command = new SlashCommand()
 				embeds: [
 					new MessageEmbed()
 						.setColor("RED")
-						.setDescription("There's nothing playing."),
+						.setDescription(":man_shrugging: | **No hay nada reproduciéndose ahora mismo.**"),
 				],
 				ephemeral: true,
 			});
@@ -53,19 +53,19 @@ const command = new SlashCommand()
         var title = title.replace(/\[/g,"")
 		const embed = new MessageEmbed()
 			.setColor(client.config.embedColor)
-			.setAuthor({ name: "Now Playing", iconURL: client.config.iconURL })
+			.setAuthor({ name: "Se está reproduciendo:", iconURL: client.config.iconURL })
 			// show who requested the song via setField, also show the duration of the song
 			.setFields([
 				{
-					name: "Requested by",
+					name: "Solicitado por",
 					value: `<@${ song.requester.id }>`,
 					inline: true,
 				},
 				// show duration, if live show live
 				{
-					name: "Duration",
+					name: "Duración",
 					value: song.isStream
-						? `\`LIVE\``
+						? `\`EN VIVO\``
 						: `\`${ prettyMilliseconds(player.position, {
 							secondsDecimalDigits: 0,
 						}) } / ${ prettyMilliseconds(song.duration, {

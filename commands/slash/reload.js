@@ -5,7 +5,7 @@ const path = require("path");
 
 const command = new SlashCommand()
 	.setName("reload")
-	.setDescription("Reload all commands")
+	.setDescription("Recarga todos los comandos slash (owner use)")
 	.setRun(async (client, interaction, options) => {
 		if (interaction.user.id === client.config.adminId) {
 			try {
@@ -79,7 +79,7 @@ const command = new SlashCommand()
 				embeds: [
 					new MessageEmbed()
 						.setColor(client.config.embedColor)
-						.setDescription("You are not authorized to use this command!"),
+						.setDescription(":x: | **No estás autorizado a utilizar este comando :face_with_monocle:**"),
 				],
 				ephemeral: true,
 			});

@@ -4,7 +4,7 @@ const SlashCommand = require("../../lib/SlashCommand");
 
 const command = new SlashCommand()
 	.setName("autoqueue")
-	.setDescription("Automatically add songs to the queue (toggle)")
+	.setDescription("Agrega automáticamente canciones a la cola (toggle)")
 	.setRun(async (client, interaction) => {
 		let channel = await client.getChannel(client, interaction);
 		if (!channel) {
@@ -19,7 +19,7 @@ const command = new SlashCommand()
 				embeds: [
 					new MessageEmbed()
 						.setColor("RED")
-						.setDescription("Lavalink node is not connected"),
+						.setDescription(":x: | **El nodo Lavalink no está conectado.**"),
 				],
 			});
 		}
@@ -29,7 +29,7 @@ const command = new SlashCommand()
 				embeds: [
 					new MessageEmbed()
 						.setColor("RED")
-						.setDescription("There's nothing playing in the queue"),
+						.setDescription(":man_shrugging: | **No hay nada reproduciéndose ahora mismo.**"),
 				],
 				ephemeral: true,
 			});
@@ -45,9 +45,9 @@ const command = new SlashCommand()
 			player.set("autoQueue", false);
 		}
 		autoQueueEmbed
-		  .setDescription(`**Auto Queue is** \`${!autoQueue ? "ON" : "OFF"}\``)
+		  .setDescription(`**El Auto Queue está** \`${!autoQueue ? "ACTIVADO" : "DESACTIVADO"}\``)
 		  .setFooter({
-		    text: `Related music will ${!autoQueue ? "now be automatically" : "no longer be"} added to the queue.`
+		    text: `La música ${!autoQueue ? "ahora automáticamente" : "ya no"} se agregará a la cola.`
       });
 		client.warn(
 			`Player: ${ player.options.guild } | [${ colors.blue(

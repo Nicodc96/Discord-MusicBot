@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Content from "../components/content";
-import Server from "../components/server";
+// import Server from "../components/server";
 
 export default function Servers(_props: any) {
     return <Content>
@@ -11,7 +11,7 @@ export default function Servers(_props: any) {
         <div style={ {
             display: 'flex',
         } }>
-            <Server
+            {/* <Server
                 icon="https://cdn.discordapp.com/icons/855346696258060338/93317b7b5c163ecaa21ed16db455066f.png?size=4096"
                 name="Coding with amogus" id=";-;"/>
             <Server
@@ -19,7 +19,8 @@ export default function Servers(_props: any) {
                 name="Coding with amogus" id=";-;"/>
             <Server
                 icon="https://cdn.discordapp.com/icons/855346696258060338/93317b7b5c163ecaa21ed16db455066f.png?size=4096"
-                name="Coding with amogus" id=";-;"/>
+                name="Coding with amogus" id=";-;"/> */}
+            <h2>Working on this. Coming soon!</h2>
         </div>
     </Content>
 }

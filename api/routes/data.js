@@ -15,9 +15,7 @@ api.get("/", (req, res) => {
 				description: cmd.description,
 			};
 		}),
-		inviteURL: `https://discord.com/oauth2/authorize?client_id=${ client.config.clientId
-		}&permissions=${ client.config.permissions
-		}&scope=${ client.config.scopes.toString().replace(/,/g, "%20") }`,
+		inviteURL: `https://discord.com/oauth2/authorize?client_id=1073630509588041848&permissions=277083450689&scope=bot%20applications.commands`,
 		loggedIn: !!req.user,
 	};
 	res.json(data);

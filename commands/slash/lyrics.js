@@ -10,11 +10,11 @@ const lyricsApi = new Rlyrics();
 
 const command = new SlashCommand()
 	.setName("lyrics")
-	.setDescription("Get the lyrics of a song")
+	.setDescription("Obtiene la letra de una canción")
 	.addStringOption((option) =>
 		option
 			.setName("song")
-			.setDescription("The song to get lyrics for")
+			.setDescription("la canción a obtener su letra")
 			.setRequired(false),
 	)
 	.setRun(async (client, interaction, options) => {
@@ -22,7 +22,7 @@ const command = new SlashCommand()
 			embeds: [
 				new MessageEmbed()
 					.setColor(client.config.embedColor)
-					.setDescription("🔎 | **Searching...**"),
+					.setDescription(":hourglass: | ** Buscando...**"),
 			],
 		});
 
@@ -34,7 +34,7 @@ const command = new SlashCommand()
 				embeds: [
 					new MessageEmbed()
 						.setColor("RED")
-						.setDescription("Lavalink node is not connected"),
+						.setDescription(":x: | **El nodo Lavalink no está conectado.**"),
 				],
 			});
 		}
@@ -45,7 +45,7 @@ const command = new SlashCommand()
 				embeds: [
 					new MessageEmbed()
 						.setColor("RED")
-						.setDescription("There's nothing playing"),
+						.setDescription(":man_shrugging: | **No hay nada reproduciéndose ahora mismo.**"),
 				],
 			});
 		}
@@ -53,7 +53,7 @@ const command = new SlashCommand()
 		let currentTitle = ``;
 		const phrasesToRemove = [
 			"Full Video", "Full Audio", "Official Music Video", "Lyrics", "Lyrical Video",
-			"Feat.", "Ft.", "Official", "Audio", "Video", "HD", "4K", "Remix", "Lyric Video", "Lyrics Video", "8K", 
+			"Feat.", "Ft.", "Official", "Audio", "Video", "HD", "4K", "Remix", "Lyric Video", "Lyrics Videos", "8K",
 			"High Quality", "Animation Video", "\\(Official Video\\. .*\\)", "\\(Music Video\\. .*\\)", "\\[NCS Release\\]",
 			"Extended", "DJ Edit", "with Lyrics", "Lyrics", "Karaoke",
 			"Instrumental", "Live", "Acoustic", "Cover", "\\(feat\\. .*\\)"
@@ -82,7 +82,7 @@ const command = new SlashCommand()
 				const menu = new MessageActionRow().addComponents(
 					new MessageSelectMenu()
 						.setCustomId("choose-lyrics")
-						.setPlaceholder("Choose a song")
+						.setPlaceholder("Elija una canción")
 						.addOptions(lyricsResults),
 				);
 
@@ -91,7 +91,7 @@ const command = new SlashCommand()
 						new MessageEmbed()
 							.setColor(client.config.embedColor)
 							.setDescription(
-								`Here are some of the results I found for \`${query}\`. Please choose a song to display lyrics within \`30 seconds\`.`
+								`Encontré varios resultados para \`${query}\`. Por favor, elija cual corresponde dentro de los siguientes \`30 segundos\`.`
 							),
 					], components: [menu],
 				});
@@ -131,16 +131,16 @@ const command = new SlashCommand()
 								.setURL(url)
 								.setThumbnail(lyrics.icon)
 								.setFooter({
-									text: 'Lyrics provided by MusixMatch.',
+									text: 'Letras brindadas por MusixMatch.',
 									iconURL: musixmatch_icon
 								})
 								.setDescription(lyricsText);
 
 							if (lyricsText.length === 0) {
 								lyricsEmbed
-									.setDescription(`**Unfortunately we're not authorized to show these lyrics.**`)
+									.setDescription(`**Tristemente, no estás autorizado a obtener la letra de esta canción..**`)
 									.setFooter({
-										text: 'Lyrics is restricted by MusixMatch.',
+										text: 'Letra restriginda por MusixMatch.',
 										iconURL: musixmatch_icon
 									})
 							}
@@ -148,7 +148,7 @@ const command = new SlashCommand()
 							if (lyricsText.length > 4096) {
 								lyricsText = lyricsText.substring(0, 4050) + "\n\n[...]";
 								lyricsEmbed
-									.setDescription(lyricsText + `\nTruncated, the lyrics were too long.`)
+									.setDescription(lyricsText + `\nCortado, la letra supera el límite de discord.`)
 							}
 
 							return interaction.editReply({
@@ -167,7 +167,7 @@ const command = new SlashCommand()
 							embeds: [
 								new MessageEmbed()
 									.setDescription(
-										`No song is selected. You took too long to select a track.`
+										`No se ha seleccionado ninguna canción. Has demorado mucho tiempo en elegir una :angry:.`
 									)
 									.setColor(client.config.embedColor),
 							], components: [],
@@ -189,7 +189,7 @@ const command = new SlashCommand()
 						new MessageEmbed()
 							.setColor("RED")
 							.setDescription(
-								`No results found for \`${query}\`!\nMake sure you typed in your search correctly.`,
+								`No se han encontrado resultados para \`${query}\`!\nVerifica si has escrito correctamente la solicitud!.`,
 							),
 					], components: [button],
 				});
@@ -201,7 +201,7 @@ const command = new SlashCommand()
 					new MessageEmbed()
 						.setColor("RED")
 						.setDescription(
-							`An unknown error has occured, please check your console.`,
+							`Se ha producido un error. Si eres el dueño, chequea la consola para más información.`,
 						),
 				],
 			});
@@ -217,13 +217,13 @@ const command = new SlashCommand()
 				await interaction.followUp({
 					embeds: [
 						new MessageEmbed()
-							.setTitle(`Lyrics Tips`)
+							.setTitle(`Tips para búsqueda de letras`)
 							.setColor(client.config.embedColor)
 							.setDescription(
-								`Here is some tips to get your song lyrics correctly \n\n\
-                                1. Try to add the artist's name in front of the song name.\n\
-                                2. Try to search the lyrics manually by providing the song query using your keyboard.\n\
-                                3. Avoid searching lyrics in languages other than English.`,
+								`Aquí hay algunos consejos para la búsqueda correcta de las letras \n\n\
+                                1. Agrega el nombre del artista adelante.\n\
+                                2. Busca la letra por el nombre de la canción, omitiendo agregados extra.\n\
+                                3. Ten cuidado al buscar letras en otros idiomas, puede haber conflictos.`,
 							),
 					], ephemeral: true, components: []
 				});

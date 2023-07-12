@@ -4,7 +4,7 @@ const SlashCommand = require("../../lib/SlashCommand");
 
 const command = new SlashCommand()
   .setName("autopause")
-  .setDescription("Automatically pause when everyone leaves the voice channel (toggle)")
+  .setDescription("La música automáticamente se pausa cuando no hay nadie en VC (toggle)")
   .setRun(async (client, interaction) => {
     let channel = await client.getChannel(client, interaction);
     if (!channel) return;
@@ -17,7 +17,7 @@ const command = new SlashCommand()
         embeds: [
           new MessageEmbed()
             .setColor("RED")
-            .setDescription("Lavalink node is not connected"),
+            .setDescription(":x: | **El nodo Lavalink no está conectado.**"),
         ],
       });
 
@@ -26,7 +26,7 @@ const command = new SlashCommand()
         embeds: [
           new MessageEmbed()
             .setColor("RED")
-            .setDescription("There's nothing playing in the queue"),
+            .setDescription(":man_shrugging: | **No hay nada reproduciéndose ahora mismo.**"),
         ],
         ephemeral: true,
       });
@@ -42,9 +42,9 @@ const command = new SlashCommand()
       player.set("autoPause", false);
     }
     autoPauseEmbed
-			.setDescription(`**Auto Pause is** \`${!autoPause ? "ON" : "OFF"}\``)
+			.setDescription(`**El Auto Pause está** \`${!autoPause ? "ACTIVADO" : "DESACTIVADO"}\``)
 			.setFooter({
-			  text: `The player will ${!autoPause ? "now be automatically" : "no longer be"} paused when everyone leaves the voice channel.`
+			  text: `El bot ${!autoPause ? "ahora automáticamente" : "ya no"} pausará la música cuando no haya nadie en VC.`
 			});
     client.warn(
       `Player: ${player.options.guild} | [${colors.blue(

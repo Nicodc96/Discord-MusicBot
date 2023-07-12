@@ -3,7 +3,7 @@ const { MessageEmbed } = require("discord.js");
 
 const command = new SlashCommand()
 	.setName("loop")
-	.setDescription("Loops the current song")
+	.setDescription("Activa el modo repetición en la canción actual")
 	.setRun(async (client, interaction, options) => {
 		let channel = await client.getChannel(client, interaction);
 		if (!channel) {
@@ -18,7 +18,7 @@ const command = new SlashCommand()
 				embeds: [
 					new MessageEmbed()
 						.setColor("RED")
-						.setDescription("Lavalink node is not connected"),
+						.setDescription(":x: | **El nodo Lavalink no está conectado.**"),
 				],
 			});
 		}
@@ -28,7 +28,7 @@ const command = new SlashCommand()
 				embeds: [
 					new MessageEmbed()
 						.setColor("RED")
-						.setDescription("Nothing is playing right now."),
+						.setDescription(":man_shrugging: | **No hay nada reproduciéndose ahora mismo.**"),
 				],
 				ephemeral: true,
 			});
@@ -37,13 +37,13 @@ const command = new SlashCommand()
 		if (player.setTrackRepeat(!player.trackRepeat)) {
 			;
 		}
-		const trackRepeat = player.trackRepeat? "enabled" : "disabled";
+		const trackRepeat = player.trackRepeat? "activado" : "desactivado";
 		
 		interaction.reply({
 			embeds: [
 				new MessageEmbed()
 					.setColor(client.config.embedColor)
-					.setDescription(`👍 | **Loop has been \`${ trackRepeat }\`**`),
+					.setDescription(`:repeat_one: | **La repetición de la canción se ha \`${ trackRepeat }\`**`),
 			],
 		});
 	});

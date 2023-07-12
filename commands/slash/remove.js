@@ -3,11 +3,11 @@ const { MessageEmbed } = require("discord.js");
 
 const command = new SlashCommand()
 	.setName("remove")
-	.setDescription("Remove track you don't want from queue")
+	.setDescription("Elimina una canción específica de la lista")
 	.addNumberOption((option) =>
 		option
 			.setName("number")
-			.setDescription("Enter track number.")
+			.setDescription("Ingresa el número de la canción.")
 			.setRequired(true),
 	)
 	
@@ -27,7 +27,7 @@ const command = new SlashCommand()
 				embeds: [
 					new MessageEmbed()
 						.setColor("RED")
-						.setDescription("Lavalink node is not connected"),
+						.setDescription(":x: | **El nodo Lavalink no está conectado.**"),
 				],
 			});
 		}
@@ -37,7 +37,7 @@ const command = new SlashCommand()
 				embeds: [
 					new MessageEmbed()
 						.setColor("RED")
-						.setDescription("There are no songs to remove."),
+						.setDescription(":man_shrugging: | **No hay canciones para quitar.**"),
 				],
 				ephemeral: true,
 			});
@@ -50,7 +50,7 @@ const command = new SlashCommand()
 			let thing = new MessageEmbed()
 				.setColor(client.config.embedColor)
 				.setDescription(
-					`Current queue has only **${ player.queue.size }** track`,
+					`:octagonal_sign: | La lista actual sólo tiene **${ player.queue.size }** canción/es`,
 				);
 			return interaction.editReply({ embeds: [thing] });
 		}
@@ -61,7 +61,7 @@ const command = new SlashCommand()
 		const number = position + 1;
 		let removeEmbed = new MessageEmbed()
 			.setColor(client.config.embedColor)
-			.setDescription(`Removed track number **${ number }** from queue`);
+			.setDescription(`:white_check_mark: | Se ha quitado la canción **${ number }** de la lista`);
 		return interaction.editReply({ embeds: [removeEmbed] });
 	});
 

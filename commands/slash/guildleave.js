@@ -6,11 +6,11 @@ const { forEach } = require("lodash");
 
 const command = new SlashCommand()
 	.setName("guildleave")
-	.setDescription("leaves a guild")
+	.setDescription("Elimina el acceso de un bot a un servidor (owner use).")
     .addStringOption((option) =>
     option
       .setName("id")
-      .setDescription("Enter the guild id to leave (type `list` for guild ids)")
+      .setDescription("Ingrese el ID identifcador para eliminar (escriba `list` para ver las ids)")
       .setRequired(true)
   )
   .setRun(async (client, interaction, options) => {
@@ -24,29 +24,29 @@ const command = new SlashCommand()
 			    });
 			    const guild = client.guilds.cache.map(guild => ` ${guild.name} | ${guild.id}`);
 			    try{
-				return interaction.reply({content:`Guilds:\n\`${guild}\``, ephemeral: true});
+				return interaction.reply({content:`Servidores:\n\`${guild}\``, ephemeral: true});
 			    }catch{
-				return interaction.reply({content:`check console for list of guilds`, ephemeral: true});
+				return interaction.reply({content:`Chequee la consola para ver los servidores`, ephemeral: true});
 			    }
 			}
 
 			const guild = client.guilds.cache.get(id);
 
 			if(!guild){
-			    return interaction.reply({content: `\`${id}\` is not a valid guild id`, ephemeral:true});
+			    return interaction.reply({content: `\`${id}\` no es un ID correcto.`, ephemeral:true});
 			}
 
-			await guild.leave().then(c => console.log(`left guild ${id}`)).catch((err) => {console.log(err)});
-			return interaction.reply({content:`left guild \`${id}\``, ephemeral: true});
+			await guild.leave().then(c => console.log(`Acceso a ${id} eliminado`)).catch((err) => {console.log(err)});
+			return interaction.reply({content:`Acceso a \`${id}\` eliminado`, ephemeral: true});
 		    }catch (error){
-			console.log(`there was an error trying to leave guild ${id}`, error);
+			console.log(`Ocurrió un error al eliminar el acceso a ${id}`, error);
 		    }
 		}else {
 			return interaction.reply({
 				embeds: [
 					new MessageEmbed()
 						.setColor(client.config.embedColor)
-						.setDescription("You are not authorized to use this command!"),
+						.setDescription(":face_with_monocle: | **No estás autorizado a utilizar este comando.**"),
 				],
 				ephemeral: true,
 			});

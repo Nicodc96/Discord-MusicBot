@@ -45,7 +45,7 @@ module.exports = {
       embeds: [
         new MessageEmbed()
           .setColor(client.config.embedColor)
-          .setDescription(":mag_right: **Searching...**"),
+          .setDescription(":hourglass: | **Buscando...**"),
       ],
       fetchReply: true,
     });
@@ -69,7 +69,7 @@ module.exports = {
           embeds: [
             new MessageEmbed()
               .setColor("RED")
-              .setDescription("There was an error while searching"),
+              .setDescription(":x: | Ha ocurrido un error al realizar al búsqueda."),
           ],
         })
         .catch(this.warn);
@@ -84,7 +84,7 @@ module.exports = {
           embeds: [
             new MessageEmbed()
               .setColor("RED")
-              .setDescription("No results were found"),
+              .setDescription(":man_shrugging: | No se han encontrado resultados."),
           ],
         })
         .catch(this.warn);
@@ -101,19 +101,19 @@ module.exports = {
       var title = title.replace(/\[/g, "");
       let addQueueEmbed = new MessageEmbed()
         .setColor(client.config.embedColor)
-        .setAuthor({ name: "Added to queue", iconURL: client.config.iconURL })
-        .setDescription(`[${title}](${res.tracks[0].uri})` || "No Title")
+        .setAuthor({ name: "Agregado a la lista", iconURL: client.config.iconURL })
+        .setDescription(`[${title}](${res.tracks[0].uri})` || "Sin título")
         .setURL(res.tracks[0].uri)
         .addFields(
           {
-            name: "Added by",
+            name: "Agregado por",
             value: `<@${interaction.user.id}>`,
             inline: true,
           },
           {
-            name: "Duration",
+            name: "Duración",
             value: res.tracks[0].isStream
-              ? `\`LIVE 🔴 \``
+              ? `\`En vivo 🔴 \``
               : `\`${client.ms(res.tracks[0].duration, {
                   colonNotation: true,
                   secondsDecimalDigits: 0,
@@ -132,7 +132,7 @@ module.exports = {
 
       if (player.queue.totalSize > 1) {
         addQueueEmbed.addFields({
-          name: "Position in queue",
+          name: "Posición en la cola",
           value: `${player.queue.size}`,
           inline: true,
         });
@@ -157,19 +157,19 @@ module.exports = {
       let playlistEmbed = new MessageEmbed()
         .setColor(client.config.embedColor)
         .setAuthor({
-          name: "Playlist added to queue",
+          name: "Playlist agreado a la cola",
           iconURL: client.config.iconURL,
         })
         .setThumbnail(res.tracks[0].thumbnail)
         .setDescription(`[${res.playlist.name}](${query})`)
         .addFields(
           {
-            name: "Enqueued",
-            value: `\`${res.tracks.length}\` songs`,
+            name: "Se agregaron",
+            value: `\`${res.tracks.length}\` canciones`,
             inline: true,
           },
           {
-            name: "Playlist duration",
+            name: "Duración de la Playlist",
             value: `\`${client.ms(res.playlist.duration, {
               colonNotation: true,
               secondsDecimalDigits: 0,

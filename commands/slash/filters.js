@@ -3,20 +3,20 @@ const SlashCommand = require("../../lib/SlashCommand");
 
 const command = new SlashCommand()
 	.setName("filters")
-	.setDescription("add or remove filters")
+	.setDescription("Agrega o elimina un filtro")
 	.addStringOption((option) =>
 		option
-			.setName("preset")
-			.setDescription("the preset to add")
+			.setName("tipo")
+			.setDescription("tipo de filtro a agregar")
 			.setRequired(true)
 			.addChoices(
-				{ name: "Nightcore", value: "nightcore" },
+				{ name: "Anime", value: "nightcore" },
 				{ name: "BassBoost", value: "bassboost" },
 				{ name: "Vaporwave", value: "vaporwave" },
 				{ name: "Pop", value: "pop" },
 				{ name: "Soft", value: "soft" },
 				{ name: "Treblebass", value: "treblebass" },
-				{ name: "Eight Dimension", value: "eightD" },
+				{ name: "7.1 Effect", value: "eightD" },
 				{ name: "Karaoke", value: "karaoke" },
 				{ name: "Vibrato", value: "vibrato" },
 				{ name: "Tremolo", value: "tremolo" },
@@ -25,7 +25,7 @@ const command = new SlashCommand()
 	)
 	
 	.setRun(async (client, interaction, options) => {
-		const args = interaction.options.getString("preset");
+		const args = interaction.options.getString("tipo");
 		
 		let channel = await client.getChannel(client, interaction);
 		if (!channel) {
@@ -40,7 +40,7 @@ const command = new SlashCommand()
 				embeds: [
 					new MessageEmbed()
 						.setColor("RED")
-						.setDescription("Lavalink node is not connected"),
+						.setDescription(":x: | **El nodo Lavalink no está conectado.**"),
 				],
 			});
 		}
@@ -50,7 +50,7 @@ const command = new SlashCommand()
 				embeds: [
 					new MessageEmbed()
 						.setColor("RED")
-						.setDescription("There's no music playing."),
+						.setDescription(":man_shrugging: | **No hay nada reproduciéndose ahora mismo.**"),
 				],
 				ephemeral: true,
 			});
@@ -60,40 +60,40 @@ const command = new SlashCommand()
 		let filtersEmbed = new MessageEmbed().setColor(client.config.embedColor);
 		
 		if (args == "nightcore") {
-			filtersEmbed.setDescription("✅ | Nightcore filter is now active!");
+			filtersEmbed.setDescription("✅ | El filtro Anime está ahora activado!");
 			player.nightcore = true;
 		} else if (args == "bassboost") {
-			filtersEmbed.setDescription("✅ | BassBoost filter is now on!");
+			filtersEmbed.setDescription("✅ | El filtro BassBoost está ahora activado!");
 			player.bassboost = true;
 		} else if (args == "vaporwave") {
-			filtersEmbed.setDescription("✅ | Vaporwave filter is now on!");
+			filtersEmbed.setDescription("✅ | El filtro Vaporwave está ahora activado!");
 			player.vaporwave = true;
 		} else if (args == "pop") {
-			filtersEmbed.setDescription("✅ | Pop filter is now on!");
+			filtersEmbed.setDescription("✅ |El filtro Pop está ahora activado!");
 			player.pop = true;
 		} else if (args == "soft") {
-			filtersEmbed.setDescription("✅ | Soft filter is now on!");
+			filtersEmbed.setDescription(":white_check_mark: | **El filtro Soft está ahora activado**");
 			player.soft = true;
 		} else if (args == "treblebass") {
-			filtersEmbed.setDescription("✅ | Treblebass filter is now on!");
+			filtersEmbed.setDescription(":white_check_mark: | **El filtro Treblebass está ahora activado**");
 			player.treblebass = true;
 		} else if (args == "eightD") {
-			filtersEmbed.setDescription("✅ | Eight Dimension filter is now on!");
+			filtersEmbed.setDescription(":white_check_mark: | **El filtro 7.1 Effect está ahora activado**");
 			player.eightD = true;
 		} else if (args == "karaoke") {
-			filtersEmbed.setDescription("✅ | Karaoke filter is now on!");
+			filtersEmbed.setDescription(":white_check_mark: | **El filtro Karaoke está ahora activado**");
 			player.karaoke = true;
 		} else if (args == "vibrato") {
-			filtersEmbed.setDescription("✅ | Vibrato filter is now on!");
+			filtersEmbed.setDescription(":white_check_mark: | **El filtro Vibrato está ahora activado**");
 			player.vibrato = true;
 		} else if (args == "tremolo") {
-			filtersEmbed.setDescription("✅ | Tremolo filter is now on!");
+			filtersEmbed.setDescription(":white_check_mark: | **El filtro Tremolo está ahora activado**");
 			player.tremolo = true;
 		} else if (args == "off") {
-			filtersEmbed.setDescription("✅ | EQ has been cleared!");
+			filtersEmbed.setDescription(":white_check_mark: | **Se ha limpiado el/los filtro/s!**");
 			player.reset();
 		} else {
-			filtersEmbed.setDescription("❌ | Invalid filter!");
+			filtersEmbed.setDescription(":x: | **Filtro inválido!**");
 		}
 		
 		return interaction.reply({ embeds: [filtersEmbed] });
